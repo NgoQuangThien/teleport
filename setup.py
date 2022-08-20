@@ -47,9 +47,12 @@ if __name__ == '__main__':
     os.system('cp -f teleport-labels.py {0}'.format(teleport_exec))
 
     config = read_yaml(teleport_config)
-    config['ssh_service']['commands'].extend(IP)
-    config['ssh_service']['commands'].extend(UPTIME)
-    config['ssh_service']['commands'].extend(OTHER)
+    if IP not in config['ssh_service']['commands']:
+        config['ssh_service']['commands'].extend(IP)
+    if UPTIME not in config['ssh_service']['commands']:
+        config['ssh_service']['commands'].extend(UPTIME)
+    if OTHER not in config['ssh_service']['commands']:
+        config['ssh_service']['commands'].extend(OTHER)
 
     write_file(teleport_config, yaml.safe_dump(config))
 
