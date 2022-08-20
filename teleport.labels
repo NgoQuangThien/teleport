@@ -1,0 +1,6 @@
+groups:
+  - MySQL
+owner:
+  - ThienNQ
+other:
+  - MySQL-Manager

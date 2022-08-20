@@ -1,0 +1,79 @@
+##	Thêm lables động cho server
+###	Tạp tệp thực thi lấy giá trị lables
+tee -a /usr/bin/teleport-labels.py <<EOF
+import os
+import sys
+import yaml
+
+
+file_path = '/etc/teleport.labels'
+
+
+def read_yaml(path):
+    with open(path) as f:
+        yaml_content = os.path.expandvars(f.read())
+        return yaml.load(yaml_content)
+
+
+if __name__ == '__main__':
+    labels = read_yaml(file_path)
+    key = sys.argv[1]
+    result = str()
+    if key in labels:
+        result = str(labels[key]).replace("'", "")
+        result = result.replace("[", "")
+        result = result.replace("]", "")
+    print(result)
+
+EOF
+###	Tạo tệp chứa giá trị cho labels (định dạng yaml).
+```
+vim /etc/teleport.labels
+```
+####	Định dạng tệp teleport.labels
+```
+groups:
+  - MySQL
+owner:
+  - ThienNQ
+other:
+  - MySQL-Manager
+```
+
+###	Chỉnh sửa tệp cấu hình teleport
+```
+vim /etc/teleport.yaml
+```
+
+###	Cấu hình dynamic labels bằng cách thêm các block như sau dưới trường "commands"
+####	Phần này để lấy tất cả địa chỉ IP của host
+```
+- name: ip
+  command: [hostname, -I]
+  period: 1m0s
+```
+
+####	Phần này để lấy Uptime của host
+- name: uptime				
+  command: [uptime, -p]
+  period: 1m0s
+
+####	Phần này để lấy danh sách labels từ tệp /etc/teleport.labels
+```
+  - name: group
+    command: [/usr/bin/python3, /usr/bin/teleport-labels.py, groups]
+    period: 1m0s
+
+  - name: owner
+    command: [/usr/bin/python3, /usr/bin/teleport-labels.py, owner]
+    period: 1m0s
+
+  - name: other
+    command: [/usr/bin/python3, /usr/bin/teleport-labels.py, other]
+    period: 1m0s	
+```
+
+###	Restart teleport
+```
+systemctl restart teleport.service
+```
