@@ -20,4 +20,4 @@ if __name__ == '__main__':
         result = str(labels[key]).replace("'", "")
         result = result.replace("[", "")
         result = result.replace("]", "")
-    print(result)
+    print(result.islower())
