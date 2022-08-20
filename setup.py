@@ -43,8 +43,10 @@ def write_file(file_path, content):
 
 
 if __name__ == '__main__':
-    os.system('cp -f teleport.labels {0}'.format(teleport_labels))
-    os.system('cp -f teleport-labels.py {0}'.format(teleport_exec))
+    if not os.path.exists(teleport_labels):
+        os.system('cp -f teleport.labels {0}'.format(teleport_labels))
+    if not os.path.exists(teleport_exec):
+        os.system('cp -f teleport-labels.py {0}'.format(teleport_exec))
 
     config = read_yaml(teleport_config)
     if IP not in config['ssh_service']['commands']:
