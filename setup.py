@@ -12,7 +12,7 @@ IP = yaml.safe_load('''
   period: 1m0s''')
 
 UPTIME = yaml.safe_load('''
-- name: ip
+- name: uptime
   command: [uptime, -p]
   period: 1m0s''')
 
@@ -53,4 +53,4 @@ if __name__ == '__main__':
 
     write_file(teleport_config, yaml.safe_dump(config))
 
-    os.system('systemctl restart teleport.service')    
+    os.system('systemctl restart teleport.service')
