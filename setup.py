@@ -7,7 +7,7 @@ teleport_config = '/etc/teleport.yaml'
 teleport_exec = '/usr/bin/teleport-labels.py'
 
 IP = yaml.safe_load('''
-- name: ip
+- name: ips
   command: [hostname, -I]
   period: 1m0s''')
 
