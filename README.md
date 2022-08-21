@@ -139,7 +139,7 @@ vim user.yaml
     logins:
     - ubuntu
     owner:
-    - test
+    - ThienNQ
     servers_groups:
     - k8s
     ips:
