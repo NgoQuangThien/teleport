@@ -3,13 +3,14 @@
 ```
 kind: role
 metadata:
+  id: 1661095896877783140
   name: owner_access
 spec:
   allow:
     logins:
     - root
     node_labels:
-      owner: '*{{external.owner}}*'
+      owner: '*''{{external.owner}}''*'
     rules:
     - resources:
       - event
@@ -45,13 +46,14 @@ version: v5
 ```
 kind: role
 metadata:
+  id: 1661086592951886326
   name: groups_access
 spec:
   allow:
     logins:
     - '{{internal.logins}}'
     node_labels:
-      groups: '*{{external.servers_groups}}*'
+      groups: '*''{{external.servers_groups}}''*'
     rules:
     - resources:
       - event
@@ -87,13 +89,14 @@ version: v5
 ```
 kind: role
 metadata:
+  id: 1661086657241259464
   name: ips_access
 spec:
   allow:
     logins:
     - '{{internal.logins}}'
     node_labels:
-      ips: '*{{external.ips}}*'
+      ips: '*''{{external.ips}}''*'
     rules:
     - resources:
       - event

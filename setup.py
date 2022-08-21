@@ -6,23 +6,21 @@ teleport_labels = '/etc/teleport.labels'
 teleport_config = '/etc/teleport.yaml'
 teleport_exec = '/usr/bin/teleport-labels.py'
 
-IP = yaml.safe_load('''
-- name: ips
-  command: [hostname, -I]
-  period: 1m0s''')
-
-UPTIME = yaml.safe_load('''
+LABELS = yaml.safe_load('''
 - name: uptime
   command: [uptime, -p]
-  period: 1m0s''')
+  period: 1m0s
 
-OTHER = yaml.safe_load('''
 - name: groups
   command: [/usr/bin/python3, /usr/bin/teleport-labels.py, groups]
   period: 1m0s
 
 - name: owner
   command: [/usr/bin/python3, /usr/bin/teleport-labels.py, owner]
+  period: 1m0s
+
+- name: ips
+  command: [/usr/bin/python3, /usr/bin/teleport-labels.py, ips]
   period: 1m0s
 
 - name: other
@@ -49,11 +47,12 @@ if __name__ == '__main__':
         os.system('cp -f teleport-labels.py {0}'.format(teleport_exec))
 
     config = read_yaml(teleport_config)
-    if IP not in config['ssh_service']['commands']:
-        config['ssh_service']['commands'].extend(IP)
-    if UPTIME not in config['ssh_service']['commands']:
-        config['ssh_service']['commands'].extend(UPTIME)
-    if OTHER not in config['ssh_service']['commands']:
-        config['ssh_service']['commands'].extend(OTHER)
+    tmp = LABELS.copy()
+    for x in tmp:
+        for y in config['ssh_service']['commands']:
+            if x == y:
+                LABELS.remove(x)
+                break
 
+    config['ssh_service']['commands'].extend(LABELS)
     write_file(teleport_config, yaml.safe_dump(config))
