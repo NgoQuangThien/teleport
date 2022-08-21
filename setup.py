@@ -57,5 +57,3 @@ if __name__ == '__main__':
         config['ssh_service']['commands'].extend(OTHER)
 
     write_file(teleport_config, yaml.safe_dump(config))
-
-    os.system('systemctl restart teleport.service')
