@@ -9,7 +9,7 @@ spec:
     logins:
     - root
     node_labels:
-      owner: '{{external.owner}}'
+      owner: '*{{external.owner}}*'
     rules:
     - resources:
       - event
@@ -51,7 +51,7 @@ spec:
     logins:
     - '{{internal.logins}}'
     node_labels:
-      groups: '{{external.servers_groups}}'
+      groups: '*{{external.servers_groups}}*'
     rules:
     - resources:
       - event
@@ -93,7 +93,7 @@ spec:
     logins:
     - '{{internal.logins}}'
     node_labels:
-      ips: '{{external.ips}}'
+      ips: '*{{external.ips}}*'
     rules:
     - resources:
       - event
