@@ -128,7 +128,7 @@ version: v5
 ```
 ##	Set user traits (on console of Teleport master)
 ```
-tctl get user/<user_name> user.yaml
+tctl get user/<user_name> > user.yaml
 ```
 ```
 vim user.yaml
