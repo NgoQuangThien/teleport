@@ -17,7 +17,7 @@ UPTIME = yaml.safe_load('''
   period: 1m0s''')
 
 OTHER = yaml.safe_load('''
-- name: group
+- name: groups
   command: [/usr/bin/python3, /usr/bin/teleport-labels.py, groups]
   period: 1m0s
 
