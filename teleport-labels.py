@@ -15,7 +15,7 @@ def read_yaml(path):
 def get_network_interfaces():
     # find the network interfaces present on the system
     interfaces_details = []
-    not_real = ['lo', 'docker', 'veth', 'br']
+    not_real = ['lo', 'docker', 'veth', 'br', 'bond']
 
     interfaces = subprocess.check_output("ls /sys/class/net", shell=True)
     interfaceString = str(interfaces)
